@@ -9,7 +9,7 @@ DROP TABLE IF EXISTS guests CASCADE;
 CREATE TABLE users (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     username TEXT NOT NULL,
-    email TEXT,
+    email TEXT UNIQUE,
     avatar TEXT
 );
 
@@ -21,6 +21,7 @@ CREATE TABLE trips (
     users_id BIGINT REFERENCES users(id)
 );
 
+-- guests & users overlap and could be combined into just users
 CREATE TABLE guests (
     guest_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name TEXT NOT NULL,
@@ -44,9 +45,9 @@ CREATE TABLE lodging (
     lodging_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name_of_place TEXT NOT NULL,
     contact_info TEXT NOT NULL,
-    price_per_night BIGINT NOT NULL,
-    check_in TEXT NOT NULL,
-    check_out TEXT NOT NULL,
+    price_per_night MONEY NOT NULL,
+    check_in TIMESTAMPTZ NOT NULL,
+    check_out TIMESTAMPTZ NOT NULL,
     address_1 TEXT NOT NULL,
     address_2 TEXT,
     city TEXT NOT NULL,
@@ -56,6 +57,7 @@ CREATE TABLE lodging (
 
 );
 
+-- Will want to remove this seed data in production apps (or have it in a separate file)
 INSERT INTO
 users (username, email, avatar)
 VALUES

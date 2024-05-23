@@ -39,6 +39,8 @@ describe('TravelBackend routes', () => {
     let res = await agent.get('/api/v1/flights');
     expect(res.status).toEqual(401);
 
+    // You could refactor this into a function to make logging in for each
+    // of your tests easier
     await agent.get('/api/v1/github/login/callback?code=42').redirects(1);
     res = await agent.get('/api/v1/flights');
     expect(res.status).toEqual(200);

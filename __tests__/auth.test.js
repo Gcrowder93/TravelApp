@@ -30,6 +30,11 @@ describe('TravelBackend routes', () => {
     expect(res.req.path).toEqual('/api/v1/trips');
   });
 
+  // This test doesn't seem to make a lot of sense.
+  // There are no POST routes for `/api/v1/github/login`,
+  // and your call to `delete('/api/v1/github/login')` will
+  // always return the same response regardless of if the user
+  // is logged in or not.
   it('should sign out a user', async () => {
     const agent = request.agent(app);
     await GithubUser.insert({
